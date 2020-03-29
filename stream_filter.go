@@ -33,6 +33,7 @@ const (
 	StreamFilterStop StreamFilterStatus = "Stop"
 
 	StreamFilterReMatchRoute StreamFilterStatus = "Retry Match Route"
+	StreamFilterReChooseHost StreamFilterStatus = "Retry Choose Host"
 )
 
 type StreamFilterBase interface {
@@ -152,4 +153,5 @@ type FilterPhase int
 const (
 	BeforeRoute FilterPhase = iota
 	AfterRoute
+	AfterChooseHost
 )

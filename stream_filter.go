@@ -131,6 +131,9 @@ type StreamReceiverFilterHandler interface {
 	SetRequestTrailers(trailers HeaderMap)
 
 	SetConvert(on bool)
+
+	// GetFilterCurrentPhase get current phase for filter
+	GetFilterCurrentPhase() FilterPhase
 }
 
 // StreamFilterChainFactory adds filter into callbacks

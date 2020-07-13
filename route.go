@@ -70,6 +70,8 @@ type Policy interface {
 	ShadowPolicy() ShadowPolicy
 
 	HashPolicy() HashPolicy
+
+	MirrorPolicy() MirrorPolicy
 }
 
 // RetryCheckStatus type
@@ -150,4 +152,9 @@ type PathMatchCriterion interface {
 
 type HashPolicy interface {
 	GenerateHash(context context.Context) uint64
+}
+
+type MirrorPolicy interface {
+	ClusterName() string
+	TransInfo() (amplification int, isTrans bool)
 }

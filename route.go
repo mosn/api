@@ -156,5 +156,5 @@ type HashPolicy interface {
 
 type MirrorPolicy interface {
 	ClusterName() string
-	TransInfo() (amplification int, isTrans bool)
+	IsMirror() bool
 }

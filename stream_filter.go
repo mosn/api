@@ -153,15 +153,9 @@ type StreamFilterChainFactory interface {
 
 // StreamFilterChainFactoryCallbacks is called in StreamFilterChainFactory
 type StreamFilterChainFactoryCallbacks interface {
-	// deprecated
-	AddStreamSenderFilter(filter StreamSenderFilter)
+	AddStreamSenderFilter(filter StreamSenderFilter, p SenderFilterPhase)
 
-	// deprecated
 	AddStreamReceiverFilter(filter StreamReceiverFilter, p ReceiverFilterPhase)
-
-	RegisterStreamSenderFilter(filter StreamSenderFilter, p SenderFilterPhase)
-
-	RegisterStreamReceiverFilter(filter StreamReceiverFilter, p ReceiverFilterPhase)
 
 	// add access log per stream
 	AddStreamAccessLog(accessLog AccessLog)

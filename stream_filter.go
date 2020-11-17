@@ -143,7 +143,7 @@ type StreamReceiverFilterHandler interface {
 	SetConvert(on bool)
 
 	// GetFilterCurrentPhase get current phase for filter
-	GetFilterCurrentPhase() FilterPhase
+	GetFilterCurrentPhase() ReceiverFilterPhase
 }
 
 // StreamFilterChainFactory adds filter into callbacks
@@ -167,9 +167,7 @@ type StreamFilterChainFactoryCallbacks interface {
 	AddStreamAccessLog(accessLog AccessLog)
 }
 
-type FilterPhase int
-
-type ReceiverFilterPhase = FilterPhase
+type ReceiverFilterPhase int
 
 const (
 	BeforeRoute ReceiverFilterPhase = iota

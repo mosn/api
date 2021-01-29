@@ -1,20 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package api
 
 import "io"
@@ -31,7 +14,6 @@ type BufferPoolCtx interface {
 	Reset(interface{})
 }
 
-// IoBuffer represents io buffer
 type IoBuffer interface {
 	// Read reads the next len(p) bytes from the buffer or until the buffer
 	// is drained. The return value n is the number of bytes read. If the
@@ -51,11 +33,6 @@ type IoBuffer interface {
 	// buffer becomes too large, ReadFrom will panic with ErrTooLarge.
 	ReadFrom(r io.Reader) (n int64, err error)
 
-	// Grow updates the length of the buffer by n, growing the buffer as
-	// needed. The return value n is the length of p; err is always nil. If the
-	// buffer becomes too large, Write will panic with ErrTooLarge.
-	Grow(n int) error
-
 	// Write appends the contents of p to the buffer, growing the buffer as
 	// needed. The return value n is the length of p; err is always nil. If the
 	// buffer becomes too large, Write will panic with ErrTooLarge.
@@ -65,26 +42,6 @@ type IoBuffer interface {
 	// needed. The return value n is the length of s; err is always nil. If the
 	// buffer becomes too large, Write will panic with ErrTooLarge.
 	WriteString(s string) (n int, err error)
-
-	// WriteByte appends the byte to the buffer, growing the buffer as
-	// needed. The return value n is the length of s; err is always nil. If the
-	// buffer becomes too large, Write will panic with ErrTooLarge.
-	WriteByte(p byte) error
-
-	// WriteUint16 appends the uint16 to the buffer, growing the buffer as
-	// needed. The return value n is the length of s; err is always nil. If the
-	// buffer becomes too large, Write will panic with ErrTooLarge.
-	WriteUint16(p uint16) error
-
-	// WriteUint32 appends the uint32 to the buffer, growing the buffer as
-	// needed. The return value n is the length of s; err is always nil. If the
-	// buffer becomes too large, Write will panic with ErrTooLarge.
-	WriteUint32(p uint32) error
-
-	// WriteUint64 appends the uint64 to the buffer, growing the buffer as
-	// needed. The return value n is the length of s; err is always nil. If the
-	// buffer becomes too large, Write will panic with ErrTooLarge.
-	WriteUint64(p uint64) error
 
 	// WriteTo writes data to w until the buffer is drained or an error occurs.
 	// The return value n is the number of bytes written; it always fits into an
@@ -140,8 +97,4 @@ type IoBuffer interface {
 
 	//SetEOF sets the IoBuffer EOF
 	SetEOF(eof bool)
-
-	Append(data []byte) error
-
-	CloseWithError(err error)
 }

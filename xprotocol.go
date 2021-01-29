@@ -139,3 +139,11 @@ type Hijacker interface {
 	// Mapping the http status code, which used by proxy framework into protocol-specific status
 	Mapping(httpStatusCode uint32) uint32
 }
+
+type XProtocolCodec interface {
+	XProtocol() XProtocol
+
+	ProtocolMatch() ProtocolMatch
+
+	HTTPMapping() HTTPMapping
+}

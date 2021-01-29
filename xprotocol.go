@@ -141,6 +141,8 @@ type Hijacker interface {
 }
 
 type XProtocolCodec interface {
+	ProtocolName() ProtocolName
+
 	XProtocol() XProtocol
 
 	ProtocolMatch() ProtocolMatch

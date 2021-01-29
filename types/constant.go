@@ -23,11 +23,25 @@ import (
 	"mosn.io/api"
 )
 
-// MOSN Header keys
+// Header key types
 const (
-	HeaderGlobalTimeout = "x-mosn-global-timeout"
-	HeaderTryTimeout    = "x-mosn-try-timeout"
-	HeaderOriginalPath  = "x-mosn-original-path"
+	HeaderStatus                   = "x-mosn-status"
+	HeaderMethod                   = "x-mosn-method"
+	HeaderHost                     = "x-mosn-host"
+	HeaderPath                     = "x-mosn-path"
+	HeaderQueryString              = "x-mosn-querystring"
+	HeaderStreamID                 = "x-mosn-streamid"
+	HeaderGlobalTimeout            = "x-mosn-global-timeout"
+	HeaderTryTimeout               = "x-mosn-try-timeout"
+	HeaderException                = "x-mosn-exception"
+	HeaderStremEnd                 = "x-mosn-endstream"
+	HeaderRPCService               = "x-mosn-rpc-service"
+	HeaderRPCMethod                = "x-mosn-rpc-method"
+	HeaderXprotocolSubProtocol     = "x-mosn-xprotocol-sub-protocol"
+	HeaderXprotocolStreamId        = "x-mosn-xprotocol-stream-id"
+	HeaderXprotocolRespStatus      = "x-mosn-xprotocol-resp-status"
+	HeaderXprotocolRespIsException = "x-mosn-xprotocol-resp-is-exception"
+	HeaderXprotocolHeartbeat       = "x-protocol-heartbeat"
 )
 
 // Error messages

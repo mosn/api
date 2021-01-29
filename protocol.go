@@ -90,3 +90,8 @@ type Decoder interface {
 	// return 1. decoded model(nil if no enough data) 2. decode error
 	Decode(ctx context.Context, data IoBuffer) (interface{}, error)
 }
+
+// HTTPMapping maps the contents of protocols to HTTP standard
+type HTTPMapping interface {
+	MappingHeaderStatusCode(ctx context.Context, headers HeaderMap) (int, error)
+}

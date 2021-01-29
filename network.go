@@ -22,10 +22,11 @@ import (
 	"net"
 	"time"
 
-	"github.com/rcrowley/go-metrics"
+	metrics "github.com/rcrowley/go-metrics"
+	"mosn.io/pkg/buffer"
 )
 
-// ConnState represents connection status
+// Connection status
 type ConnState int
 
 // Connection statuses
@@ -57,7 +58,7 @@ type Connection interface {
 
 	// Write writes data to the connection.
 	// Called by other-side stream connection's read loop. Will loop through stream filters with the buffer if any are installed.
-	Write(buf ...IoBuffer) error
+	Write(buf ...buffer.IoBuffer) error
 
 	// Close closes connection with connection type and event type.
 	// ConnectionCloseType - how to close to connection
@@ -128,10 +129,10 @@ type Connection interface {
 	LocalAddressRestored() bool
 
 	// GetWriteBuffer is used by network writer filter
-	GetWriteBuffer() []IoBuffer
+	GetWriteBuffer() []buffer.IoBuffer
 
 	// GetReadBuffer is used by network read filter
-	GetReadBuffer() IoBuffer
+	GetReadBuffer() buffer.IoBuffer
 
 	// FilterManager returns the FilterManager
 	FilterManager() FilterManager
@@ -153,7 +154,7 @@ type Connection interface {
 	State() ConnState
 
 	// OnRead deals with data not read from doRead process
-	OnRead(buffer IoBuffer)
+	OnRead(buffer buffer.IoBuffer)
 }
 
 // ConnectionEvent type

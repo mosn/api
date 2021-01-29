@@ -15,48 +15,52 @@
  * limitations under the License.
  */
 
-package types
+package buffer
 
 import (
-	"context"
-	"time"
-
-	"mosn.io/api"
+	"errors"
+	"sync"
 )
 
-// factory
-type TracerBuilder func(config map[string]interface{}) (Tracer, error)
+var ibPool IoBufferPool
 
-type Driver interface {
-	Init(config map[string]interface{}) error
-
-	Register(proto api.Protocol, builder TracerBuilder)
-
-	Get(proto api.Protocol) Tracer
+// IoBufferPool is Iobuffer Pool
+type IoBufferPool struct {
+	pool sync.Pool
 }
 
-type Tracer interface {
-	Start(ctx context.Context, request interface{}, startTime time.Time) Span
+// take returns IoBuffer from IoBufferPool
+func (p *IoBufferPool) take(size int) (buf IoBuffer) {
+	v := p.pool.Get()
+	if v == nil {
+		buf = NewIoBuffer(size)
+	} else {
+		buf = v.(IoBuffer)
+		buf.Alloc(size)
+		buf.Count(1)
+	}
+	return
 }
 
-type Span interface {
-	TraceId() string
+// give returns IoBuffer to IoBufferPool
+func (p *IoBufferPool) give(buf IoBuffer) {
+	buf.Free()
+	p.pool.Put(buf)
+}
 
-	SpanId() string
+// GetIoBuffer returns IoBuffer from pool
+func GetIoBuffer(size int) IoBuffer {
+	return ibPool.take(size)
+}
 
-	ParentSpanId() string
-
-	SetOperation(operation string)
-
-	SetTag(key uint64, value string)
-
-	SetRequestInfo(requestInfo api.RequestInfo)
-
-	Tag(key uint64) string
-
-	FinishSpan()
-
-	InjectContext(requestHeaders api.HeaderMap, requestInfo api.RequestInfo)
-
-	SpawnChild(operationName string, startTime time.Time) Span
+// PutIoBuffer returns IoBuffer to pool
+func PutIoBuffer(buf IoBuffer) error {
+	count := buf.Count(-1)
+	if count > 0 {
+		return nil
+	} else if count < 0 {
+		return errors.New("PutIoBuffer duplicate")
+	}
+	ibPool.give(buf)
+	return nil
 }

@@ -15,52 +15,46 @@
  * limitations under the License.
  */
 
-package buffer
+package api
 
 import (
-	"errors"
-	"sync"
+	"context"
+	"time"
 )
 
-var ibPool IoBufferPool
+// factory
+type TracerBuilder func(config map[string]interface{}) (Tracer, error)
 
-// IoBufferPool is Iobuffer Pool
-type IoBufferPool struct {
-	pool sync.Pool
+type Driver interface {
+	Init(config map[string]interface{}) error
+
+	Register(proto ProtocolName, builder TracerBuilder)
+
+	Get(proto ProtocolName) Tracer
 }
 
-// take returns IoBuffer from IoBufferPool
-func (p *IoBufferPool) take(size int) (buf IoBuffer) {
-	v := p.pool.Get()
-	if v == nil {
-		buf = NewIoBuffer(size)
-	} else {
-		buf = v.(IoBuffer)
-		buf.Alloc(size)
-		buf.Count(1)
-	}
-	return
+type Tracer interface {
+	Start(ctx context.Context, request interface{}, startTime time.Time) Span
 }
 
-// give returns IoBuffer to IoBufferPool
-func (p *IoBufferPool) give(buf IoBuffer) {
-	buf.Free()
-	p.pool.Put(buf)
-}
+type Span interface {
+	TraceId() string
 
-// GetIoBuffer returns IoBuffer from pool
-func GetIoBuffer(size int) IoBuffer {
-	return ibPool.take(size)
-}
+	SpanId() string
 
-// PutIoBuffer returns IoBuffer to pool
-func PutIoBuffer(buf IoBuffer) error {
-	count := buf.Count(-1)
-	if count > 0 {
-		return nil
-	} else if count < 0 {
-		return errors.New("PutIoBuffer duplicate")
-	}
-	ibPool.give(buf)
-	return nil
+	ParentSpanId() string
+
+	SetOperation(operation string)
+
+	SetTag(key uint64, value string)
+
+	SetRequestInfo(requestInfo RequestInfo)
+
+	Tag(key uint64) string
+
+	FinishSpan()
+
+	InjectContext(requestHeaders HeaderMap, requestInfo RequestInfo)
+
+	SpawnChild(operationName string, startTime time.Time) Span
 }

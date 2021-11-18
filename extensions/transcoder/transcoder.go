@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-package api
+package transcoder
 
 import (
 	"context"
+	"mosn.io/api"
 )
 
 // Transcoder provide ability to transcoding request/response
 type Transcoder interface {
 	// Accept
-	Accept(ctx context.Context, headers HeaderMap, buf IoBuffer, trailers HeaderMap) bool
+	Accept(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap) bool
 	// TranscodingRequest
-	TranscodingRequest(ctx context.Context, headers HeaderMap, buf IoBuffer, trailers HeaderMap) (HeaderMap, IoBuffer, HeaderMap, error)
+	TranscodingRequest(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap) (api.HeaderMap, api.IoBuffer, api.HeaderMap, error)
 	// TranscodingResponse
-	TranscodingResponse(ctx context.Context, headers HeaderMap, buf IoBuffer, trailers HeaderMap) (HeaderMap, IoBuffer, HeaderMap, error)
+	TranscodingResponse(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap) (api.HeaderMap, api.IoBuffer, api.HeaderMap, error)
 }

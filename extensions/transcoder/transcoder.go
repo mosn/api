@@ -27,7 +27,7 @@ type Transcoder interface {
 	// Accept
 	Accept(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap) bool
 	// TranscodingRequest
-	TranscodingRequest(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap) (api.HeaderMap, api.IoBuffer, api.HeaderMap, error)
+	TranscodingRequest(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap, config map[string]interface{}) (api.HeaderMap, api.IoBuffer, api.HeaderMap, error)
 	// TranscodingResponse
-	TranscodingResponse(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap) (api.HeaderMap, api.IoBuffer, api.HeaderMap, error)
+	TranscodingResponse(ctx context.Context, headers api.HeaderMap, buf api.IoBuffer, trailers api.HeaderMap, config map[string]interface{}) (api.HeaderMap, api.IoBuffer, api.HeaderMap, error)
 }

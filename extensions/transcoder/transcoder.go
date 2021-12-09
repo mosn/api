@@ -19,8 +19,11 @@ package transcoder
 
 import (
 	"context"
+
 	"mosn.io/api"
 )
+
+type TranscoderFactory func(cfg map[string]interface{}) Transcoder
 
 // Transcoder provide ability to transcoding request/response
 type Transcoder interface {

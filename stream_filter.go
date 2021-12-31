@@ -27,7 +27,7 @@ type StreamFilterStatus string
 const (
 	// Continue filter chain iteration.
 	StreamFilterContinue StreamFilterStatus = "Continue"
-	// Do not iterate to next iterator.
+	// will skip other filters in the same phase (be careful)
 	StreamFilterStop StreamFilterStatus = "Stop"
 	// terminate request.
 	StreamFiltertermination StreamFilterStatus = "termination"

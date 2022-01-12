@@ -118,7 +118,7 @@ type ServiceAware interface {
 	GetMethodName() string
 }
 
-// HeartbeatPredicate provides the ability to judge if current is a goaway frmae, which indicates that current connection
+// GoAwayPredicate provides the ability to judge if current is a goaway frmae, which indicates that current connection
 // should be no longer used and turn into the draining state.
 type GoAwayPredicate interface {
 	IsGoAwayFrame() bool
@@ -141,6 +141,12 @@ type XProtocol interface {
 	// generate a request id for stream to combine stream request && response
 	// use connection param as base
 	GenerateRequestID(*uint64) uint64
+}
+
+// GracefulShutdown provides the ability to construct proper GoAway command for xprotocol
+type GracefulShutdown interface {
+	// GoAway builds an active GoAway command, requestId is the maxClientStreamID
+	GoAway(context context.Context, requestId uint64) XFrame
 }
 
 // HeartbeatBuilder provides the ability to construct proper heartbeat command for xprotocol sub-protocols

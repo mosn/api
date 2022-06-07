@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package types
+package api
 
 import (
 	"io"

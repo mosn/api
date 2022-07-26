@@ -25,16 +25,21 @@ type ListenerFilterFactoryCreator func(config map[string]interface{}) (ListenerF
 // StreamFilterFactoryCreator creates a StreamFilterChainFactory according to config
 type StreamFilterFactoryCreator func(config map[string]interface{}) (StreamFilterChainFactory, error)
 
+// StreamFilterFactoryXdsCreator creates a StreamFilterChainFactory according to xds config
+type StreamFilterFactoryXdsCreator func(config map[string]interface{}) (StreamFilterChainFactory, error)
+
 // NetworkFilterFactoryCreator creates a NetworkFilterChainFactory according to config
 type NetworkFilterFactoryCreator func(config map[string]interface{}) (NetworkFilterChainFactory, error)
 
 var creatorListenerFactory map[string]ListenerFilterFactoryCreator
 var creatorStreamFactory map[string]StreamFilterFactoryCreator
+var creatorStreamXdsFactory map[string]StreamFilterFactoryXdsCreator
 var creatorNetworkFactory map[string]NetworkFilterFactoryCreator
 
 func init() {
 	creatorListenerFactory = make(map[string]ListenerFilterFactoryCreator)
 	creatorStreamFactory = make(map[string]StreamFilterFactoryCreator)
+	creatorStreamXdsFactory = make(map[string]StreamFilterFactoryXdsCreator)
 	creatorNetworkFactory = make(map[string]NetworkFilterFactoryCreator)
 }
 
@@ -46,6 +51,17 @@ func RegisterListener(filterType string, creator ListenerFilterFactoryCreator) {
 // RegisterStream registers the filterType as StreamFilterFactoryCreator
 func RegisterStream(filterType string, creator StreamFilterFactoryCreator) {
 	creatorStreamFactory[filterType] = creator
+}
+
+// RegisterStreamWithXds registers the filterType as StreamFilterFactoryXdsCreator
+func RegisterStreamWithXds(filterType string, creator StreamFilterFactoryXdsCreator) {
+	creatorStreamXdsFactory[filterType] = creator
+}
+
+//ExistsXdsRegisterStream Determine if filterType is registered
+func ExistsXdsRegisterStream(filterType string) bool {
+	_, ok := creatorStreamXdsFactory[filterType]
+	return ok
 }
 
 // RegisterNetwork registers the filterType as  NetworkFilterFactoryCreator

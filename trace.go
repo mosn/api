@@ -56,5 +56,7 @@ type Span interface {
 
 	InjectContext(requestHeaders HeaderMap, requestInfo RequestInfo)
 
+	InjectExitContext(responseHeaders HeaderMap, requestInfo RequestInfo)
+
 	SpawnChild(operationName string, startTime time.Time) Span
 }

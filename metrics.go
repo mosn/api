@@ -24,7 +24,7 @@ import (
 )
 
 // GetAll returns all metrics data
-var GetAll func(metrics []Metrics)
+var GetAll func() []Metrics
 
 // ResetAll is only for test and internal usage. DO NOT use this if not sure.
 var ResetAll func()

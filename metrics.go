@@ -58,7 +58,4 @@ type Metrics interface {
 type MetricsSink interface {
 	// Flush flush given metrics
 	Flush(writer io.Writer, metrics []Metrics)
-
-	// notify create metrics
-	Notify(metrics Metrics)
 }

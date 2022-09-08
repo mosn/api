@@ -24,7 +24,7 @@ import (
 )
 
 // GetAll returns all metrics data
-var GetAll func(metrics []types.Metrics)
+var GetAll func(metrics []Metrics)
 
 // ResetAll is only for test and internal usage. DO NOT use this if not sure.
 var ResetAll func()
@@ -34,7 +34,7 @@ var ResetAll func()
 var SetStatsMatcher func(all bool, exclusionLabels, exclusionKeys []string)
 
 // filter is type.labels
-var GetMetricsFilter func(filter string) (metrics types.Metrics)
+var GetMetricsFilter func(filter string) (metrics Metrics)
 
 // Metrics is a wrapper interface for go-metrics
 // support Counter, Gauge Histogram

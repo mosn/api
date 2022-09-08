@@ -23,19 +23,6 @@ import (
 	"github.com/rcrowley/go-metrics"
 )
 
-// GetAll returns all metrics data
-var GetAll func() []Metrics
-
-// ResetAll is only for test and internal usage. DO NOT use this if not sure.
-var ResetAll func()
-
-// SetStatsMatcher sets the exclusion labels and exclusion keys
-// if a metrics labels/keys contains in exclusions, it will be ignored
-var SetStatsMatcher func(all bool, exclusionLabels, exclusionKeys []string)
-
-// filter is type.labels
-var GetMetricsFilter func(filter string) (metrics Metrics)
-
 // Metrics is a wrapper interface for go-metrics
 // support Counter, Gauge Histogram
 type Metrics interface {
@@ -71,4 +58,7 @@ type Metrics interface {
 type MetricsSink interface {
 	// Flush flush given metrics
 	Flush(writer io.Writer, metrics []Metrics)
+
+	// notify create metrics
+	Notify(metrics Metrics)
 }

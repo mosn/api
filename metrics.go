@@ -34,7 +34,7 @@ var ResetAll func()
 var SetStatsMatcher func(all bool, exclusionLabels, exclusionKeys []string)
 
 // filter is type.labels
-var GetMetricsFilter (filter string) (metrics types.Metrics)
+var GetMetricsFilter func(filter string) (metrics types.Metrics)
 
 // Metrics is a wrapper interface for go-metrics
 // support Counter, Gauge Histogram

@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     # A matrix proves the supported range of Go versions work. This must always
     # include the floor Go version policy of Mosn and the current Go version.
-    # Mosn binaries are built with a specific version inside this range.
+    # Mosn binaries are built with a specific version inside this range. Mosn's
+    # floor Go version is two behind current. For example, if Go supports 1.20,
+    # Mosn supports 1.18, 1.19 and 1.20.
     #
     # A floor version is required to ensure Mosn can receive security patches.
     # Without one, dependencies become locked to an old version of Go, which
@@ -24,8 +26,8 @@ jobs:
     strategy:
       matrix:
         go-version:
-          - "1.18"
           - "1.19"  # Current Go version
+          - "1.17"  # Floor Go version of Mosn == current - 2
 
     steps:
       - name: Check out code

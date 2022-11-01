@@ -18,8 +18,9 @@ jobs:
     # itself receives no security patch updates.
     #
     # Note: Mosn might work with a Go version below its supported floor, but
-    # users must not depend on this. Mosn's library dependencies are free to
-    # features in it supported floor Go version at any time.
+    # users must not depend on this. Mosn and its library dependencies are free
+    # to use features in the supported floor Go version at any time. This
+    # remains true even if mosn library dependencies are not eagerly updated.
     #
     # Note: There are no unit tests in this project, so we run a matrix on
     # build, not test.

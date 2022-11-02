@@ -1,6 +1,6 @@
 module mosn.io/api
 
-go 1.18
+go 1.17
 
 require (
 	// match version of envoy control plane.

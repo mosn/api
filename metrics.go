@@ -24,7 +24,7 @@ import (
 )
 
 // Metrics is a wrapper interface for go-metrics
-// support Counter, Gauge Histogram
+// support Counter, Gauge, Histogram, EWMA
 type Metrics interface {
 	// Type returns metrics logical type, e.g. 'downstream'/'upstream', this is more like the Subsystem concept
 	Type() string
@@ -46,6 +46,11 @@ type Metrics interface {
 	// Histogram creates or returns a go-metrics histogram by key
 	// if the key is registered by other interface, it will be panic
 	Histogram(key string) metrics.Histogram
+
+	// EWMA creates or returns a go-metrics ewma by key
+	// if the key is registered by other interface, it will be panic.
+	// See: https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
+	EWMA(key string, alpha float64) metrics.EWMA
 
 	// Each call the given function for each registered metric.
 	Each(func(string, interface{}))

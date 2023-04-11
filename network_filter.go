@@ -26,8 +26,8 @@ type FilterStatus string
 
 // FilterStatus types
 const (
-	Continue FilterStatus = "Continue"
-	Stop     FilterStatus = "Stop"
+	Continue FilterStatus = "Continue" // will continue other filters
+	Stop     FilterStatus = "Stop"     // will skip other filters
 )
 
 // FilterManager is a groups of filters

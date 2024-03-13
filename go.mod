@@ -10,4 +10,4 @@ require (
 
 )
 
-require google.golang.org/protobuf v1.26.0-rc.1 // indirect
+require google.golang.org/protobuf v1.33.0 // indirect
